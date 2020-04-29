@@ -3,43 +3,69 @@ import {
     View,
     Text,
     StyleSheet,
-    Image
+    Image,
+    Dimensions
 } from 'react-native';
-const image = {uri: 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto/zaiywkaxptzxmajetrd7/pg-3-basketball-shoe-bqfLGJ.jpg'}
-const image2 = {uri: '../pic/fd.jpg'}
-
+import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { ThemeProvider } from 'react-native-paper';
+const { width, height } = Dimensions.get('window');
+import * as theme from '../theme';
 export default class ProfileScreen extends Component{
     render(){
         return(
             <View
-                style={style.container}
+                style={styles.container}
             >
-                <Text>
-                    Profile
-                </Text>
-                <Image 
-                    style={style.image}
-                    source={image}
-                />
-                <Image 
-                    style={style.image}
-                    source={image2}
-                />
+               <View style={styles.image}>
+                    <Image
+                        source={{uri: "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"}}
+                        style={{ width, height: 250 }}
+                        resizeMode='cover'
+                    />
+                    <TouchableOpacity style={styles.buttonAdd}>
+                        <View style={styles.buttonAddImage}>
+                            <Icon name="plus" size={25}/>
+                            <Text style={styles.title}>Upload</Text>
+                        </View>
+                    </TouchableOpacity>
+               </View>
+               <View style={styles.data}>
+                    <Text style={styles.text}>
+                        Email
+                    </Text>
+                    <Text style={styles.text}>
+                        baophu_10@gmail.com
+                    </Text>
+               </View>
             </View>
         );
     }
 }
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor: '#f1f2f6'
+        backgroundColor: '#f1f2f6',
+        backgroundColor: theme.colors.white,
     },
-    image:{
+    buttonAddImage: {
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignItems: 'center',
+    },
+    buttonAdd:{
+        borderColor: theme.colors.gray,
+        borderWidth: 1,
         width: 100,
-        height: 100,
-        backgroundColor: 'red',
-        flex: 8/10
+        top: -27
+    },
+    title:{
+
+    },
+    text:{
+        borderWidth: 0.5,
+        borderTopColor: theme.colors.gray,
+        padding: 10,
+        color: theme.colors.black,
     }
 })

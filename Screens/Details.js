@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Animated, Image, Dimensions, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
+import { Text, StyleSheet, View, Animated, Dimensions,Image, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import * as theme from '../theme';
+import Cart from '../Ex/Cart';
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
     flex: {
@@ -140,7 +141,7 @@ class DetailsScreen extends Component{
             id: product.id,
             name: product.name,
             price: product.price,
-            image: product.image,
+            preview: product.preview,
             quantity: 1,
         }
         this.props.navigation.navigate('Cart', {
@@ -156,7 +157,7 @@ class DetailsScreen extends Component{
     
         return (
           <View style={[ styles.flex, styles.row, styles.dotsContainer ]}>
-            {product.images.map((item, index) => {
+            {product.imagesT.map((item, index) => {
               const opacity = dotPosition.interpolate({
                 inputRange: [index - 1, index, index + 1],
                 outputRange: [0.5, 1, 0.5],
@@ -190,7 +191,7 @@ class DetailsScreen extends Component{
                 onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: this.scrollX } } }])}
               >
               {
-                product.images.map((img, index) => 
+                product.imagesT.map((img, index) => 
                   <Image
                     key={`${index}-${img}`}
                     source={{ uri: img }}
@@ -278,7 +279,7 @@ class DetailsScreen extends Component{
                         styles.last,
                         styles.active
                       ]}
-                      onPress={() => { this.addToCart(pictuerDetail) }}
+                      onPress={() =>  this.addToCart(product) }
                       >
                     <Text
                       style={[

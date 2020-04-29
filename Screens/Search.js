@@ -5,8 +5,66 @@ import * as theme from '../theme';
 import { View } from 'native-base';
 import flatListData from '../data/flatlistData';
 const { width, height } = Dimensions.get('window');
+import { ListItem, SearchBar } from "react-native-elements";
 
 export default class SearchScreen extends Component{
+    constructor(props) {
+        super(props); 
+      
+        this.state = { 
+          loading: false,   
+          data: [],
+          temp: [],
+          error: null,
+          search: null
+        };
+      }
+      
+      componentDidMount() {
+        this.getData();
+      }
+      getData = async ()  => {
+        const url = `http://192.168.1.108/listproducts.php`;
+        this.setState({ loading: true });
+          
+         try {
+            const response = await fetch(url);
+            const json = await response.json();
+            this.setResult(json);
+         } catch (e) {
+            this.setState({ error: 'Error Loading content', loading: false });
+         }
+      };
+      setResult = (res) => {
+        this.setState({
+          data: [...this.state.data, ...res],
+          temp: [...this.state.temp, ...res],
+          error: res.error || null,
+          loading: false
+        });
+      }
+      updateSearch = search => {
+        this.setState({ search }, () => {
+            if ('' == search) {
+                this.setState({
+                    data: [...this.state.temp]
+                });
+                return;
+            }
+             
+            this.state.data = this.state.temp.filter(function(item){
+                return item.name.includes(search);
+              }).map(function({id, name, price, preview}){
+                return {id, name, price, preview};
+            });
+        });
+    };
+    renderHeader = () => {
+        return <SearchBar placeholder="Search Here..."
+            lightTheme round editable={true}
+            value={this.state.search}
+            onChangeText={this.updateSearch} />; 
+    }; 
     renderRecommendation = (item, index) => {
         const {navigation} = this.props;
         return (
@@ -35,25 +93,25 @@ export default class SearchScreen extends Component{
       }
     render(){
         const { navigation } = this.props;
+        
         return(
-            <View style={{flex: 1}}>
-                <View style={styles.searchBar}>
-                    <View style={styles.bar}>
-                        <Icon name="search1" size={22}/>
-                        <TextInput 
-                            placeholder="Search" 
-                            autoFocus={false} 
-                        />
-                    </View>
-                </View>
-                <View style={{alignItems: 'center'}}>
-                    <FlatList
-                        data={flatListData}
-                        numColumns={2}
-                        renderItem={({ item, index }) => this.renderRecommendation(item, index)}
-                    />
-                </View>
-            </View>
+            this.state.error != null ?
+            <View style={{ flex: 1, flexDirection: 'column',justifyContent: 'center', alignItems: 'center' }}>
+                <Text>{this.state.error}</Text>
+                <Button onPress={
+                    () => {
+                    this.getData();
+                    }
+                } title="Reload" />
+            </View> : 
+            <FlatList
+                ListHeaderComponent={this.renderHeader}
+                data={this.state.data}
+                keyExtractor={item => item.name}
+                numColumns={2}
+                renderItem={({ item, index }) => this.renderRecommendation(item, index)}
+            />
+                
         );
     }
 }

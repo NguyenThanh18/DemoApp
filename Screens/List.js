@@ -124,7 +124,7 @@ class List extends Component{
     };
   }
   componentDidMount(){
-      fetch('http://192.168.1.107/listproducts.php')
+      fetch('http://192.168.1.108/listproducts.php')
       .then((response) => response.json())
       .then((responseJson) => {
           this.setState({
@@ -223,7 +223,7 @@ class List extends Component{
               scrollEnabled
               showsHorizontalScrollIndicator={false}
               style={[ styles.shadow, { overflow: 'visible' }]}
-              data={flatListData}
+              data={this.state.listProduct}
               keyExtractor={(item) => `${item.id}`}
               renderItem={({ item, index }) => this.renderRecommendation(item, index)}
             />

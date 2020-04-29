@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {NavigationContainer} from "@react-navigation/native";
-import {createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './Screens/Home';
@@ -9,7 +8,6 @@ import ProfileScreen from './Screens/Profile';
 import FavoriteScreen from './Screens/Favorite';
 import CartScreen from './Screens/Cart';
 import DetailsScreen from './Screens/Details'
-import { View } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -17,6 +15,7 @@ const HomeStackScreen = () =>(
   <Stack.Navigator>
       <Stack.Screen name="Discover" component={HomeScreen}/>
       <Stack.Screen name="Details" component={DetailsScreen}/>
+      <Stack.Screen name="Cart" component={CartScreen}/>
     </Stack.Navigator>
 )
 function MyTabs(){
