@@ -8,7 +8,7 @@ import ProfileScreen from './Screens/Profile';
 import FavoriteScreen from './Screens/Favorite';
 import CartScreen from './Screens/Cart';
 import DetailsScreen from './Screens/Details'
-
+import LoginScreen from './Screens/auth/LoginScreen',
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const HomeStackScreen = () =>(
@@ -16,6 +16,7 @@ const HomeStackScreen = () =>(
       <Stack.Screen name="Discover" component={HomeScreen}/>
       <Stack.Screen name="Details" component={DetailsScreen}/>
       <Stack.Screen name="Cart" component={CartScreen}/>
+      <Stack.Screen name="Login" component={LoginScreen}/>
     </Stack.Navigator>
 )
 function MyTabs(){

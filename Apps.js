@@ -9,30 +9,53 @@ import CartScreen from './Screens/Cart';
 import DetailsScreen from './Screens/Details';
 import List from './Screens/List';
 import SearchScreen from './Screens/Search';
-
+import LoginScreen from './Screens/auth/LoginScreen';
+import StartScreen from './Screens/auth/StartScreen';
+import RegisterScreen from './Screens/auth/RegisterScreen';
 const Tab = createBottomTabNavigator();
 
-const Stack = createStackNavigator();
+const StackHome = createStackNavigator();
 
-const HomeStackScreen = () =>(
-    <Stack.Navigator>
-        <Stack.Screen name="Discover" component={List}/>
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
-      </Stack.Navigator>
-  )
+function HomeStack () {
+    return(
+      <StackHome.Navigator>
+        <StackHome.Screen name="Discover" component={List}/>
+        <StackHome.Screen name="Details" component={DetailsScreen} />
+        <StackHome.Screen options={{headerShown: false}} name="Cart" component={CartScreen} />
+        <StackHome.Screen name="Search" component={SearchScreen} />
+        <StackHome.Screen name="Profile" component={ProfileScreen} />
+      </StackHome.Navigator>
+    )
+}
+const StackApp = createStackNavigator();
+
+function AppStack () {
+    return(
+      <StackApp.Navigator
+        screenOptions={{
+          headerShown: false
+        }}
+      >
+        <StackApp.Screen name="Start" component={StartScreen}/>
+        <StackApp.Screen name="Login" component={LoginScreen}/>
+        <StackApp.Screen name="Register" component={RegisterScreen}/>
+        <StackApp.Screen name="Home" component={MyTabs} />
+    </StackApp.Navigator>
+    )
+}
+
 
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="List"
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
       }}
     >
       <Tab.Screen
         name="Home"
-        component={HomeStackScreen}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" color={color} size={size} />
@@ -81,7 +104,7 @@ function MyTabs() {
 export default function App() {
     return (
       <NavigationContainer>
-        <MyTabs />
+        <AppStack />
       </NavigationContainer>
     );
   }

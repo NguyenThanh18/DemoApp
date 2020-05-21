@@ -5,6 +5,8 @@ const colors = {
     caption: '#BCCCD4',
     active: '#007BFA',
     red: '#e91e63',
+    blue: '#2980b9',
+    green: '#10ac84',
   };
   
   const sizes = {

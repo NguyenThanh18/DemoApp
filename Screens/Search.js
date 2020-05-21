@@ -3,7 +3,6 @@ import {StyleSheet, TextInput, FlatList, TouchableOpacity, Image, Text,Dimension
 import Icon from 'react-native-vector-icons/AntDesign';
 import * as theme from '../theme';
 import { View } from 'native-base';
-import flatListData from '../data/flatlistData';
 const { width, height } = Dimensions.get('window');
 import { ListItem, SearchBar } from "react-native-elements";
 
@@ -54,8 +53,8 @@ export default class SearchScreen extends Component{
              
             this.state.data = this.state.temp.filter(function(item){
                 return item.name.includes(search);
-              }).map(function({id, name, price, preview}){
-                return {id, name, price, preview};
+              }).map(function({id, name, price, preview, favorite}){
+                return {id, name, price, preview, favorite};
             });
         });
     };

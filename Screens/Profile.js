@@ -13,6 +13,8 @@ const { width, height } = Dimensions.get('window');
 import * as theme from '../theme';
 export default class ProfileScreen extends Component{
     render(){
+        const { route } = this.props;
+        const { Email } = route.params;
         return(
             <View
                 style={styles.container}
@@ -32,10 +34,9 @@ export default class ProfileScreen extends Component{
                </View>
                <View style={styles.data}>
                     <Text style={styles.text}>
-                        Email
+                        {Email}
                     </Text>
                     <Text style={styles.text}>
-                        baophu_10@gmail.com
                     </Text>
                </View>
             </View>

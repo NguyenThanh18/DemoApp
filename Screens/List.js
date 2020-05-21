@@ -124,7 +124,7 @@ class List extends Component{
     };
   }
   componentDidMount(){
-      fetch('http://192.168.1.108/listproducts.php')
+      fetch('http://10.128.126.219/listproducts.php')
       .then((response) => response.json())
       .then((responseJson) => {
           this.setState({
@@ -243,7 +243,7 @@ class List extends Component{
             <Image style={[styles.recommendationImage]} source={{ uri: item.preview }} />
             <View style={[ styles.flex, styles.row, styles.recommendationOptions ]}>
               <Icon
-                name={item.favorite ? 'heart' : 'hearto'}
+                name={item.favorite == 1 ? 'heart' : 'hearto'}
                 color= '#e91e63'
                 size= {22}
                 style={styles.heart}
@@ -259,6 +259,9 @@ class List extends Component{
       )
     }
     render() {
+      console.log(this.props.route.params);
+      console.log(this.state.listProduct)
+
         return (
           <View
             style={{flex: 1}}

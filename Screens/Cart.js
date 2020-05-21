@@ -6,6 +6,7 @@ import {
     Image,
     TouchableOpacity,
     ScrollView,
+    RefreshControl
 } from 'react-native';
 import InputSpinner from "react-native-input-spinner";
 import { Container, Header, Left, Right, Button, Title } from 'native-base';
@@ -216,6 +217,8 @@ const styles = StyleSheet.create({
 })
 
  class CartScreen extends Component{
+   
+    
     async setCart(cart) {
         try {
             await AsyncStorage.setItem('@Cart', JSON.stringify(cart));
@@ -318,9 +321,16 @@ const styles = StyleSheet.create({
             nameInput: '',
             phoneInput: '',
             addressInput: '',
+            refreshing: false,
+            isFetching: false,
         };
     }
-    
+    onRefresh() {
+        this.setState({refresh: true});
+        setTimeout(() => {
+          this.setState({refresh: false});
+        }, 2000);
+      }
     async componentDidMount() {
         
         this.getCart().then(() => {
@@ -331,12 +341,13 @@ const styles = StyleSheet.create({
         } );
 
     }
-
+     
     render(){
         console.log(this.props.route.params);
         console.log(this.state.cart.products);
+      
         return(
-
+            
            <View style={styles.container}>
                <Container >
                         <Header style={styles.headerBar}>
@@ -348,7 +359,15 @@ const styles = StyleSheet.create({
                         </Right>
                         </Header>
                     </Container>
-               <ScrollView style={styles.list}>
+               <ScrollView style={styles.list}
+                   refreshControl={
+                    <RefreshControl
+                      refreshing={this.state.refresh}
+                      onRefresh={() => this.onRefresh()}
+                      tintColor="red"
+                    />
+                  } 
+               >
                 <View >
                         {this.state.cart.products != null && this.state.cart.products.length > 0 ? (this.state.cart.products.map((item, key) => {
                             return (
